@@ -4,7 +4,7 @@
   "description": "JavaScript unit test framework",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jasmine spec/*"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/olavoasantos/unite.js/issues"
   },
-  "homepage": "https://github.com/olavoasantos/unite.js#readme"
+  "homepage": "https://github.com/olavoasantos/unite.js#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine": "^2.8.0"
+  }
 }
