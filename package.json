@@ -1,0 +1,24 @@
+{
+  "name": "unite.js",
+  "version": "0.0.0",
+  "description": "JavaScript unit test framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olavoasantos/unite.js.git"
+  },
+  "keywords": [
+    "unit",
+    "test",
+    "testing"
+  ],
+  "author": "Olavo Amorim Santos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olavoasantos/unite.js/issues"
+  },
+  "homepage": "https://github.com/olavoasantos/unite.js#readme"
+}
