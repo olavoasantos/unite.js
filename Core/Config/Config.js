@@ -2,8 +2,8 @@ let fs = require("../FileSystem/FileSystem");
 
 class Config {
     constructor() {
-        this.custom = this.getCustom();
         this.default = JSON.parse(fs.get(fs.fromRoot("Core/unite.config.js")).content);
+        this.custom = this.getCustom();
     }
 
     get get() {
@@ -15,8 +15,8 @@ class Config {
             return JSON.parse(fs.get(fs.fromRoot("unite.config.js")).content);
         }
 
-        return {};
+        return Object.assign({}, this.default);
     }
 }
 
-module.exports = new Config;
+module.exports = Config;
