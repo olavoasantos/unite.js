@@ -4,17 +4,13 @@ class Unite {
 
     constructor() {
         this.config = new Config;
+        this.initializeModules();
     }
 
-    initAssertions() {
-        this.assertions = require(this.config.get.assertions.package);
-        this.assertions.make();
-    }
-
-    initDom() {
-        if(this.config.get.dom.required) {
-            this.dom = require(this.config.get.dom.package);
-            this.dom.make();
+    initializeModules() {
+        for(let data in this.config.get.modules) {
+            this[data] = this.config.get.modules[data].module;
+            this[data].initialize(this.config.get.modules[data]);
         }
     }
 

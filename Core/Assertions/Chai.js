@@ -1,5 +1,9 @@
 let chai = require('chai');
 class Chai {
+    static initialize($config) {
+        //
+    }
+
     static make() {
         global.assert = chai.assert;
         global.expect = chai.expect;

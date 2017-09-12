@@ -20,4 +20,29 @@ describe("Dom unit tests.", function() {
         expect(global.window).toBe(undefined);
     });
 
+    /** @test */
+    it("It doesn't create a global DOM if not required", function() {
+        expect(global.window).toBe(undefined);
+
+        Dom.initialize({
+            required: false,
+            module: "../Core/Dom/JSDom"
+        });
+
+        expect(global.window).toBe(undefined);
+    });
+
+    /** @test */
+    it("It creates a global DOM if required", function() {
+        expect(global.window).toBe(undefined);
+
+        Dom.initialize({
+            required: true,
+            module: "../Core/Dom/JSDom"
+        });
+
+        expect(window.constructor.name).toBe("Window");
+        Dom.destroy();
+    });
+
 });

@@ -4,7 +4,7 @@
   "description": "Simple JavaScript unit testing framework.",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine spec/*"
+    "test": "jasmine spec/*.specs.js"
   },
   "repository": {
     "type": "git",

@@ -28,8 +28,8 @@ class FileSystem {
         return fs.existsSync($path);
     }
 
-    isDirectory($path) {
-
+    fromCore($path) {
+        return path.join(__dirname, "..", $path);
     }
 
     fromRoot($path) {
@@ -46,4 +46,4 @@ class FileSystem {
 
 }
 
-module.exports = new FileSystem;
+module.exports = FileSystem;

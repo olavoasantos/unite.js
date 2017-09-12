@@ -1,8 +1,9 @@
-let fs = require("../FileSystem/FileSystem");
+let FileSystem = require("../FileSystem/FileSystem");
+let fs = new FileSystem;
 
 class Config {
     constructor() {
-        this.default = JSON.parse(fs.get(fs.fromRoot("Core/unite.config.js")).content);
+        this.default = require(fs.fromCore("unite.config.js"));
         this.custom = this.getCustom();
     }
 
@@ -12,7 +13,7 @@ class Config {
 
     getCustom() {
         if(fs.exists(fs.fromRoot("unite.config.js"))) {
-            return JSON.parse(fs.get(fs.fromRoot("unite.config.js")).content);
+            return require(fs.fromRoot("unite.config.js"));
         }
 
         return Object.assign({}, this.default);

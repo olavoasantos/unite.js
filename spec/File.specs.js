@@ -1,5 +1,6 @@
+let FileSystem = require("../Core/FileSystem/FileSystem");
 let File = require("../Core/FileSystem/File");
-let fs = require("../Core/FileSystem/FileSystem");
+let fs = new FileSystem;
 
 let $file = fs.set(fs.fromRoot("newFile.txt"), "New file contents");
 

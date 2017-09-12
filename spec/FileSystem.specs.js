@@ -1,5 +1,6 @@
+let FileSystem = require("../Core/FileSystem/FileSystem");
 let path = require("path");
-let fs = require("../Core/FileSystem/FileSystem");
+let fs = new FileSystem;
 
 describe("FileSystem unit tests.", function() {
 
