@@ -1,9 +1,7 @@
 let chai = require('chai');
-class Chai {
-    static initialize($config) {
-        //
-    }
+let Module = require("../Contracts/Module");
 
+class Chai extends Module {
     static make() {
         global.assert = chai.assert;
         global.expect = chai.expect;

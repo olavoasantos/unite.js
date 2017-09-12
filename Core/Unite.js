@@ -3,14 +3,15 @@ let Config = require("./Config/Config");
 class Unite {
 
     constructor() {
-        this.config = new Config;
-        this.initializeModules();
+        this.$config = new Config;
+
+        this.__initializeModules__();
     }
 
-    initializeModules() {
-        for(let data in this.config.get.modules) {
-            this[data] = this.config.get.modules[data].module;
-            this[data].initialize(this.config.get.modules[data]);
+    __initializeModules__() {
+        for(let data in this.$config.get.modules) {
+            this[`$${data}`] = this.$config.get.modules[data].module;
+            this[`$${data}`].initialize(this.$config.get.modules[data], this);
         }
     }
 

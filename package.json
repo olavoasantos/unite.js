@@ -4,7 +4,7 @@
   "description": "Simple JavaScript unit testing framework.",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine spec/*.specs.js"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "jsdom": "^11.2.0"
   },
   "devDependencies": {
-    "jasmine": "^2.8.0"
+    "jasmine": "^2.8.0",
+    "jasmine-expect": "^3.7.1"
   }
 }

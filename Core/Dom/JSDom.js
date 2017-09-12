@@ -1,6 +1,7 @@
 let jsdom = require("jsdom").JSDOM;
+let Module = require("../Contracts/Module");
 
-class JSDom {
+class JSDom extends Module {
     static initialize($config) {
         if($config.required) {
             this.make();
