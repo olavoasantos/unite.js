@@ -39,7 +39,9 @@ class FileSystem {
     getRoot() {
         let $root = __dirname;
 
-        while( !this.exists(path.join($root, "node_modules")) ) $root = path.join($root, "..");
+        while( !this.exists(path.join($root, "node_modules")) ) {
+            $root = path.join($root, "..");
+        }
 
         return $root;
     }

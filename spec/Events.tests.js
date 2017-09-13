@@ -3,8 +3,6 @@ describe("Events unit tests:", function() {
 
     /** @test */
     it("It", function() {
-        events = new Events;
-
     });
 
 });

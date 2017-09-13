@@ -2,8 +2,9 @@ let fs = require("fs");
 let path = require("path");
 
 class File {
+
     constructor($path) {
-        this.__getInfoFrom($path);
+        this.getInfoFrom($path);
     }
 
     relativePath($path) {
@@ -13,14 +14,13 @@ class File {
     rename($name) {
         let $path = path.join(this.directory, $name);
         fs.renameSync(this.path, $path);
-        this.__getInfoFrom($path);
+        this.getInfoFrom($path);
 
         return this;
     }
 
     async delete() {
         await fs.unlinkSync(this.path);
-
         delete this;
     }
 
@@ -48,7 +48,7 @@ class File {
         return this;
     }
 
-    __getInfoFrom($path) {
+    getInfoFrom($path) {
         this.path = $path;
         this.basename = path.basename($path);
         this.extension = path.extname($path);
@@ -56,6 +56,7 @@ class File {
         this.content = fs.readFileSync($path, 'utf8');
         this.name = path.basename($path, this.extension);
     }
+
 }
 
 module.exports = File;

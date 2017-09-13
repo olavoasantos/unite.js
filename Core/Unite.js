@@ -10,8 +10,11 @@ class Unite {
 
     __initializeModules__() {
         for(let data in this.$config.get.modules) {
-            this[`$${data}`] = this.$config.get.modules[data].module;
-            this[`$${data}`].initialize(this.$config.get.modules[data], this);
+            this[`$${data}`] = new this.$config.get.modules[data].module(
+                this,
+                this.$config.get.modules[data]
+            );
+            this[`$${data}`].initialize();
         }
     }
 

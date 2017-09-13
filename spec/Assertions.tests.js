@@ -1,4 +1,4 @@
-let Assertions = require("../Core/Assertions/Chai");
+let assertions = require("../Core/Assertions/Chai");
 
 describe("Assertions unit tests.", function() {
 
@@ -7,6 +7,7 @@ describe("Assertions unit tests.", function() {
         const $expect = expect;
         expect(global.assert).toBe(undefined);
 
+        Assertions = new assertions;
         Assertions.make();
 
         expect(assert.constructor.name).to.be.equal("Function");
@@ -18,6 +19,7 @@ describe("Assertions unit tests.", function() {
         const $expect = expect;
         expect(assert.constructor.name).toBe("Function");
 
+        Assertions = new assertions;
         Assertions.destroy();
 
         expect(global.assert).toBe(undefined);

@@ -1,13 +1,18 @@
 class Module {
-    static initialize($config, $unite) {
+    constructor($unite, $config) {
+        this.unite = $unite;
+        this.config = $config;
+    }
+
+    initialize() {
         //
     }
 
-    static make() {
+    make() {
         //
     }
 
-    static destroy() {
+    destroy() {
         //
     }
 }
