@@ -28,6 +28,12 @@ class FileSystem {
         return fs.existsSync($path);
     }
 
+    getFromDir($path) {
+        return fs.readdirSync($path).map(file => {
+            return new File(`${$path}/${file}`);
+        });
+    }
+
     fromCore($path) {
         return path.join(__dirname, "..", $path);
     }
