@@ -8,7 +8,10 @@ class Events extends Module {
     }
 
     make() {
+        this.unite.$events.register("beforeCompilingEachSuite");
+        this.unite.$events.register("afterCompilingEachSuite");
         this.unite.$events.register("beforeEachTest");
+        this.unite.$events.register("afterEachTest");
     }
 
     destroy() {

@@ -40,6 +40,10 @@ class EventManager {
         this.emitter.removeAllListeners(event);
     }
 
+    getEvents(event) {
+        return this.list[event];
+    }
+
     clear(events) {
         this.list[events] = [];
     }

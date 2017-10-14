@@ -24,7 +24,12 @@
   "dependencies": {
     "chai": "^4.1.2",
     "jasmine-ajax": "^3.3.1",
-    "jsdom": "^11.2.0"
+    "jsdom": "^11.2.0",
+    "require": "^2.4.20",
+    "vue": "^2.5.2",
+    "vue-template-compiler": "^2.5.2",
+    "vue-test-utils": "^1.0.0-beta.2",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "jasmine": "^2.8.0",

@@ -1,10 +1,6 @@
 let path = require("path");
 
 module.exports = {
-    "drivers": {
-        "*.tests.js": "DefaultDriver",
-        "*.tests.vue": "VueDriver"
-    },
     "modules": {
         "events": {
             "module": require(path.join(__dirname, "Events", "Events"))
@@ -13,8 +9,16 @@ module.exports = {
             "module": require(path.join(__dirname, "Assertions", "Chai"))
         },
         "dom": {
-            "required": false,
+            "required": true,
             "module": require(path.join(__dirname, "Dom", "JSDom"))
+        },
+        "indexer": {
+            "module": require(path.join(__dirname, "Indexer", "IndexerModule")),
+            "path": "./tests",
+            "drivers": {
+                ".tests.js": "DefaultDriver",
+                ".tests.vue": "VueDriver"
+            }
         }
     }
 }

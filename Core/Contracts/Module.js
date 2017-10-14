@@ -5,7 +5,7 @@ class Module {
     }
 
     initialize() {
-        //
+        this.make();
     }
 
     make() {

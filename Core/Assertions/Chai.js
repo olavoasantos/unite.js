@@ -2,6 +2,9 @@ let chai = require('chai');
 let Module = require("../Contracts/Module");
 
 class Chai extends Module {
+    initialize() {
+        this.make();
+    }
     make() {
         global.assert = chai.assert;
         global.expect = chai.expect;

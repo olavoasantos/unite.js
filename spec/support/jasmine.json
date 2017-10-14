@@ -1,7 +1,7 @@
 {
   "spec_dir": "spec",
   "spec_files": [
-    "**/*.tests.js"
+    "**/*.specs.js"
   ],
   "helpers": [
     "../node_modules/jasmine-expect/index.js"
