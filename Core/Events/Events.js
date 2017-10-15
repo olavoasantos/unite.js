@@ -15,7 +15,10 @@ class Events extends Module {
     }
 
     destroy() {
+        this.unite.$events.remove("beforeCompilingEachSuite");
+        this.unite.$events.remove("afterCompilingEachSuite");
         this.unite.$events.remove("beforeEachTest");
+        this.unite.$events.remove("afterEachTest");
     }
 }
 

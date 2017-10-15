@@ -7,14 +7,13 @@ class Indexer {
         this.path = config.path;
         this.files = this.getFiles();
         this.suites = [];
-        this.index();
     }
 
     getFiles() {
         return fs.getFromDir(fs.fromRoot(this.path));
     }
 
-    index() {
+    run() {
         this.files.forEach(file => {
             let obj = {
                 driver: "DefaultDriver",
@@ -28,6 +27,8 @@ class Indexer {
 
             this.suites.push(obj);
         });
+
+        return this.suites;
     }
 }
 

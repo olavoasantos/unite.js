@@ -1,3 +1,7 @@
-Unite.test("It tests something awesome in success", () => {
-    assert.equal(1, 1);
+Unite.suite("Success suite", () => {
+
+    Unite.test("It tests something awesome in success", () => {
+        expect(1).toEqual(2);
+    });
+
 });

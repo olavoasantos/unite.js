@@ -3,8 +3,27 @@ let fs = new FileSystem;
 
 class Config {
     constructor() {
-        this.default = require(fs.fromCore("unite.config.js"));
+        return this.fetcher();
+    }
+
+    fetcher() {
         this.custom = this.getCustom();
+        this.default = require(fs.fromCore("unite.config.js"));
+        let node = Object.assign({}, this.default, this.custom);
+
+        return (path) => {
+            if(!path) return node;
+            let value = node;
+            for(let key of path.split(".")) {
+                if(key in value) {
+                    value = value[key];
+                } else {
+                    return path;
+                }
+            }
+
+            return value;
+        }
     }
 
     get get() {

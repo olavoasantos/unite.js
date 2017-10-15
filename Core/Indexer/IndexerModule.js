@@ -3,20 +3,19 @@ let Module = require("../Contracts/Module");
 
 class IndexerModule extends Module {
     initialize() {
-        if("path" in this.unite.$config.get) {
-            this.config.path = this.unite.$config.get.path;
-        }
+        this.config.path = this.unite.$config("path");
+        this.config.drivers = this.unite.$config("drivers");
         this.indexer = new Indexer(this.config);
 
         this.make();
     }
 
     make() {
-        this.unite.$suites = this.indexer.suites;
+        this.unite.$indexer = this.indexer;
     }
 
     destroy() {
-        delete this.unite.$suites;
+        delete this.unite.$indexer;
     }
 }
 

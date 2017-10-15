@@ -1,18 +1,7 @@
-class DefaultDriver {
-    constructor(file) {
-        this.file = file;
-        this.content = file.content;
-    }
+let Driver = require("./Driver");
 
-    run(suite) {
-        suite.tests.forEach(item => {
-            item.test();
-        });
-    }
+class DefaultDriver extends Driver {
 
-    build() {
-        return eval(this.content);
-    }
 }
 
 module.exports = DefaultDriver;

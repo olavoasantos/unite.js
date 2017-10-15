@@ -1,5 +1,5 @@
 class Module {
-    constructor($unite, $config) {
+    constructor($unite, $config = {}) {
         this.unite = $unite;
         this.config = $config;
     }

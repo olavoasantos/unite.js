@@ -10,9 +10,9 @@ describe("Unite.js unit tests.", function() {
             target = "Modified";
         });
 
-        expect(target).to.be.null;
+        expect(target).toBeNull();
         unite.$emit("beforeEachTest");
-        expect(target).to.equal("Modified");
+        expect(target).toEqual("Modified");
     });
 
     /** @test */

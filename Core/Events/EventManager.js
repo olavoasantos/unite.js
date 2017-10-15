@@ -4,6 +4,7 @@ class EventManager {
 
     constructor(object) {
         this.list = {};
+        this.forked = {};
         this.initializeObject(object);
         this.emitter = new EventEmitter;
     }
@@ -30,6 +31,8 @@ class EventManager {
     addEventTo(event) {
         return (callback) => {
             this.list[event].push(callback);
+
+            return this.object;
         }
     }
 
@@ -42,6 +45,19 @@ class EventManager {
 
     getEvents(event) {
         return this.list[event];
+    }
+
+    fork(event) {
+        this.forked[event] = JSON.parse(JSON.stringify(this.list));
+    }
+
+    rollback(event) {
+        this.list = this.forked[event];
+        delete this.forked[event];
+    }
+
+    all() {
+        return this.list;
     }
 
     clear(events) {

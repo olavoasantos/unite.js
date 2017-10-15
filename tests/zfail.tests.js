@@ -1,3 +1,3 @@
 Unite.test("It tests something awesome in failed", () => {
-    assert.equal(1, 2);
+    expect(1).toEqual(2);
 });

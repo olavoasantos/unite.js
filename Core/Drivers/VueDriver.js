@@ -1,29 +1,17 @@
-let VueTestUtils = require("vue-test-utils");
+let Driver = require("./Driver");
+let VueTestUtilModule = require("../Vue/VueTestUtilModule");
+let vueTestUtilModule = new VueTestUtilModule(Unite);
 
-class VueDriver {
+class VueDriver extends Driver {
 
-    constructor(file) {
-        this.file = file;
-        this.content = file.content;
-        global.vueTestUtils = VueTestUtils;
+    beforeSuite(suite) {
+        vueTestUtilModule.initialize();
+        global.component = suite.component;
     }
 
-    build() {
-        this.compile();
-        Unite.__currentSuite__["component"] = this.component;
-        eval(this.tests);
-    }
-
-    run(suite) {
-        suite.tests.forEach(item => {
-            global.component = suite.component;
-            Unite.$emit("beforeEachTest");
-            item.test();
-            Unite.$emit("afterEachTest");
-
-
-            delete global.component;
-        });
+    afterSuite(suite) {
+        delete global.component;
+        vueTestUtilModule.destroy();
     }
 
     compile() {
@@ -40,6 +28,12 @@ class VueDriver {
         script = script.replace("export default", "module.exports = ");
 
         return eval(script);
+    }
+
+    build() {
+        this.compile();
+        Unite.__currentSuite__["component"] = this.component;
+        eval(this.tests);
     }
 
     findByTag($tag, $content) {

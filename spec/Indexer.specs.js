@@ -12,6 +12,7 @@ describe("Indexer unit tests:", function() {
                 ".tests.vue": "VueDriver"
             },
         });
+        indexer.run();
 
         expect(indexer.files).toBeArray();
         expect(indexer.files).toBeArrayOfSize(3);
@@ -27,6 +28,7 @@ describe("Indexer unit tests:", function() {
                 ".tests.vue": "VueDriver"
             }
         });
+        indexer.run();
 
         expect(indexer.suites).toBeArrayOfSize(3);
         indexer.suites.forEach(suite => {
