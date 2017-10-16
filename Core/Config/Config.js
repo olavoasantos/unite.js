@@ -1,4 +1,5 @@
 let FileSystem = require("../FileSystem/FileSystem");
+let merge = require('deepmerge');
 let fs = new FileSystem;
 
 class Config {
@@ -9,7 +10,7 @@ class Config {
     fetcher() {
         this.custom = this.getCustom();
         this.default = require(fs.fromCore("unite.config.js"));
-        let node = Object.assign({}, this.default, this.custom);
+        let node = merge(this.default, this.custom);
 
         return (path) => {
             if(!path) return node;

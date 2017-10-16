@@ -13,7 +13,13 @@ class TestGlobalsModule extends Module {
 
     suite(name, suite) {
         const currentSuite = Object.assign({}, Unite.__currentSuite__);
-        Unite.$suites.push(Unite.$compiler.compile(name, {content:suite}, "SuiteDriver"));
+        if(currentSuite.component !== undefined) {
+            Unite.$suites.push(Unite.$compiler.compile(name, {content:suite,
+                component: currentSuite.component,
+            }, "SuiteVueDriver"));
+        } else {
+            Unite.$suites.push(Unite.$compiler.compile(name, {content:suite}, "SuiteDriver"));
+        }
         Unite.__currentSuite__ = currentSuite;
     }
 

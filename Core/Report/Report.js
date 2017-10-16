@@ -16,11 +16,15 @@ class Report {
             echo.lredBg.white.text(`  tests: ${this.tests} | assertions: ${this.assertions} | errors: ${this.errors.length}  `).break.break;
             this.errors.forEach((item, count) => {
                 echo.redBg.white.text(` ${count+1}) ${item.suite} @ ${item.name} `).break;
-                echo.text(item.error.matcherResult.message()).break;
+                if("matcherResult" in item.error) {
+                    echo.text(item.error.matcherResult.message()).break;
+                } else {
+                    echo.text(item.error).break;
+                }
                 echo.line();
             });
         } else {
-            echo.greenBg.left(`tests: ${this.tests} | assertions: ${this.assertions}`);
+            echo.greenBg.text(`  tests: ${this.tests} | assertions: ${this.assertions}  `);
         }
     }
 

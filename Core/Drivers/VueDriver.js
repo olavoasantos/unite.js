@@ -6,11 +6,11 @@ class VueDriver extends Driver {
 
     beforeSuite(suite) {
         vueTestUtilModule.initialize();
-        global.component = suite.component;
+        global.$component = suite.component;
     }
 
     afterSuite(suite) {
-        delete global.component;
+        delete global.$component;
         vueTestUtilModule.destroy();
     }
 
