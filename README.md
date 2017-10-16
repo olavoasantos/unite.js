@@ -6,7 +6,7 @@ This is a premature version. Still needs more work, but its working. Contributio
 
 ## Installation
 ```
-    npm install unite.js --require-dev
+    npm install unite.js --save-dev
 ```
 
 In your `package.json` file, set your `test` command in your `scripts` to:
