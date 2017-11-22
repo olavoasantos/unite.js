@@ -1,37 +1,36 @@
 let path = require("path");
+let fs = require("../FileSystem/FileSystem");
+let File = new fs;
 
 class Compiler {
 
     constructor(unite) {
         this.unite = unite;
+        this.setup = this.getSetup();
     }
 
     run(suites) {
-        suites.forEach(suite => {
-            this.unite.$suites.push(this.compile(suite.file.basename, suite.file, suite.driver));
-        });
+        return suites.map(suite => this.compile(suite));
     }
 
-    compile(name, suite, driverName) {
-        this.unite.$emit("beforeCompilingEachSuite");
-        this.unite.__currentSuite__ = {
-            name: name,
-            driver: null,
-            tests: [],
-            events: [],
-        };
-        let driverClass = require(path.join(__dirname, "../", "Drivers", driverName));
-        this.unite.__currentSuite__.driver = new driverClass(suite);
-        let label = Math.random().toString(36).substring(7);
-        this.unite.$events.fork(label);
-        this.unite.__currentSuite__.driver.build();
-        this.unite.__currentSuite__.events = this.unite.$events.list;
-        this.unite.$events.rollback(label);
-        let compiled = Object.assign({}, this.unite.__currentSuite__);
-        this.__currentSuite__ = {};
-        this.unite.$emit("afterCompilingEachSuite");
+    compile(suite) {
+        Unite.$events.scope("CompilingEachSuite", (events) => {
+            suite.driver.build(this.setup);
+            suite.events = events;
+            suite.compile();
+        });
 
-        return compiled;
+        return suite;
+    }
+
+    getSetup() {
+        let setup = "";
+        this.unite.$config("setup").forEach(file => {
+            let $file = File.get(file);
+            setup += $file.content;
+        });
+
+        return setup;
     }
 
 }

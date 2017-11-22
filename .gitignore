@@ -47,4 +47,17 @@ Temporary Items
 .apdisk
 
 .idea
-node_modules
+node_modules/*
+legacy
+setup.js
+test.js
+unite.config.js
+index.js
+tests
+Fixes.txt
+node_modules/boom/images/boom.png
+node_modules/hawk/images/hawk.png
+node_modules/hawk/images/logo.png
+node_modules/hoek/images/hoek.png
+node_modules/jasmine-core/images/jasmine-horizontal.png
+node_modules/jasmine-core/images/jasmine_favicon.png

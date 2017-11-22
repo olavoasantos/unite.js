@@ -19,17 +19,19 @@ In your `package.json` file, set your `test` command in your `scripts` to:
 }
 ```
 
+Now you can run `npm run test` or simply `npm test`.
+
 ## Basic Usage
 
 ### Common tests
 
 By default, Unite.js will look for `.tests.js` files inside a `tests` folder in your root folder.
 
-So, to create tests, call the `Unite.test()` function, passing a `name` and a `function` as the first and second arguments, respectively. For example, create a `example.tests.js` file inside your `./tests` folder and start testing:
+So, to create tests, call the `test()` global helper passing a `name` and a `function` as the first and second arguments, respectively. Alternatively, you can call the call the `Unite.test()` function which works the same way. For example, create a `example.tests.js` file inside your `./tests` folder and start testing:
 
 ```js
     // ./tests/example.tests.js
-    Unite.test("Testing an equality", () => {
+    test("Testing an equality", () => {
         expect(1).toEqual(1);
     });
 ```  
@@ -63,7 +65,7 @@ For instance, create a `example.tests.vue` inside yor `./tests` folder:
     </script>
     
     <tests>
-        Unite.test("It sees Hello world", () => {
+        test("It sees Hello world", () => {
             let wrapper = Unite.$mount($component),
                 el = wrapper.find("div").text();
             expect(el).toEqual("Hello world");
@@ -84,9 +86,9 @@ When testing a `.tests.vue` component, Unite.js injects the parsed component as 
 
 Check out [vue test utils documentation](https://vue-test-utils.vuejs.org/) for more details.
 
-## Suites
+## Group
 
-If you wish to group specific tests, you can create `suites`! So say we are testing a Counter vue component and we want to have tests related to the template and tests related to the small aspect of the counter:
+If you wish to group specific tests, you can create groups by using the `group` helper! So say we are testing a Counter vue component and we want to have tests related to the template and tests related to the small aspect of the counter:
 
 ```vue
 // ./tests/counter.tests.vue
@@ -108,8 +110,8 @@ If you wish to group specific tests, you can create `suites`! So say we are test
 </script>
 
 <tests>
-    Unite.suite("Counter: template", () => {
-        Unite.test("It sees the default count", () => {
+    group("Counter: template", () => {
+        test("It sees the default count", () => {
             let wrapper = Unite.$mount($component);
             let counter = wrapper.find(".counter").text();
 
@@ -117,14 +119,14 @@ If you wish to group specific tests, you can create `suites`! So say we are test
         });
     });
 
-    Unite.suite("Counter: unit", () => {
-        Unite.test("It defaults to a count of 0", () => {
+    group("Counter: unit", () => {
+        test("It defaults to a count of 0", () => {
             let wrapper = Unite.$mount($component);
 
             expect(wrapper.vm.count).toBe(0);
         });
 
-        Unite.test("It increments the count when the button is clicked", () => {
+        test("It increments the count when the button is clicked", () => {
             let wrapper = Unite.$mount($component);
 
             expect(wrapper.vm.count).toBe(0);
@@ -145,17 +147,17 @@ As we can see by our last example, we constantly have to repeat the component mo
 // ./tests/counter.tests.vue
 // ...
 <tests>
-    Unite.suite("Counter: unit", () => {
+    group("Counter: unit", () => {
         let wrapper;
         Unite.beforeEachTest(() => {
-            let wrapper = Unite.$mount($component);
-        );
+            wrapper = Unite.$mount($component);
+        });
         
-        Unite.test("It defaults to a count of 0", () => {
+        test("It defaults to a count of 0", () => {
             expect(wrapper.vm.count).toBe(0);
         });
 
-        Unite.test("It increments the count when the button is clicked", () => {
+        test("It increments the count when the button is clicked", () => {
             expect(wrapper.vm.count).toBe(0);
 
             wrapper.find('button').trigger('click');
@@ -168,20 +170,81 @@ As we can see by our last example, we constantly have to repeat the component mo
 
 Since this is a premature version of Unite.js, there aren't many hooks yet. For now, you can hook into:
 
+* `beforeSuite`: Runs before the suite
+* `afterSuite`: Runs after the suite
 * `beforeEachTest`: Runs before each test of the suite
 * `afterEachTest`: Runs after each test of the suite
 
-I'm going to keep on working to add more! =)
+## Filtering tests
+
+If you wish to run only certain tests, groups or files, you can pass a parameter to `npm run test`. On our `counter.tests.vue` example, say we only want to run the `Counter: unit` group. To do so, simply run `npm run test unit`.
+
+Be aware that if you have other files, groups or tests which contain the word `unit` they will be run as well.
 
 ## Custom configuration
 
 If you wish to use a different test folder, you can simply define a new path on a custom configuration file! To do that, create a `unite.config.js` file on your project root and export an object:
 
 ```js
+    // ./unite.config.js
     module.exports = {
         path: "./resources/assets/js/components",
     }
 ```
+
+## Setup file
+
+If you wish to create helper functions to be used on all the test suites, you can create a file and tell Unite.js to prepend it to the test suites. To do that, create a `.js`, for example:
+
+```js
+    // ./setup.js
+
+    /** @helper It clicks a selector */
+    let click = (selector) => {
+        let node = wrapper.find(selector);
+        node.trigger('click');
+    };
+
+    /** @helper It types into an input */
+    let type = (selector, value) => {
+        let node = wrapper.find(selector);
+        
+        node.element.value = value;
+        node.trigger("input");
+    };
+```
+Then, on your `unite.config.js` file, add:
+
+```js
+    // ./unite.config.js
+    module.exports = {
+        // ... other configuration
+        setup: [
+            "./setup.js"
+        ],
+    }
+```
+Now you can use your helpers on all your tests!
+
+## Upgrade 0.0.3 -> 0.0.4
+
+* `Unite.suite()` has been deprecated. Change it to `Unite.group()` or `group()`.
+
+## Version 0.0.4
+
+* Added the ability to filter files, tests and groups through the command line
+* Setup: Setup files can be declared through the `unite.config.js` files and will be prepended on the test files
+* Global helpers:
+    * Tests now can be declared both using `Unite.test()` or using the global `test()` helper
+    * Groups can be created using both using `Unite.group()` or using the global `group()` helper
+* Indexer: Now Unite.js can index files withing subfolders of the mais test directory
+* Final report redesign:
+    * Error report redesign
+    * Specifies error line
+    * Added execution time
+* Bug fixes:
+    * Fixed error during parsing of Vue.js SFCs where script tags contained attributes
+    * Fixed error caused by "//" comments and statements without ";" in *.tests.vue files
 
 ## Author
 * [Olavo Amorim Santos](https://github.com/olavoasantos)

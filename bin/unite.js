@@ -1,4 +1,6 @@
 #! /usr/bin/env node
 
 let Unite = require("../Core/Unite");
-(new Unite).run();
+let [,,filter] = process.argv;
+
+(new Unite).run(filter);

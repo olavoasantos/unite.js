@@ -1,34 +1,28 @@
 let FileSystem = require('../FileSystem/FileSystem');
+let Suite = require("../Suite/Suite");
 let fs = new FileSystem;
 
 class Indexer {
     constructor(config) {
-        this.config = config;
-        this.path = config.path;
-        this.files = this.getFiles();
         this.suites = [];
-    }
-
-    getFiles() {
-        return fs.getFromDir(fs.fromRoot(this.path));
+        this.path = config.path;
     }
 
     run() {
-        this.files.forEach(file => {
-            let obj = {
-                driver: "DefaultDriver",
-                file: file
-            };
-            Object.keys(this.config.drivers).forEach(ext => {
-                if(file.basename.endsWith(ext)) {
-                    obj.driver = this.config.drivers[ext];
+        try {
+            fs.getFiles(
+                this.path,
+                file => {
+                    let suite = new Suite(file);
+                    if(suite.isTestable) this.suites.push(suite);
                 }
-            });
+            );
 
-            this.suites.push(obj);
-        });
-
-        return this.suites;
+            return this.suites;
+        } catch (e) {
+            Unite.$report.throw(e);
+            process.exit();
+        }
     }
 }
 

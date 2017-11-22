@@ -4,9 +4,14 @@ let vueTestUtilModule = new VueTestUtilModule(Unite);
 
 class VueDriver extends Driver {
 
-    beforeSuite(suite) {
+    build(setup) {
+        this.compile();
+        this.setup = setup + this.tests;
+    }
+
+    beforeSuite() {
         vueTestUtilModule.initialize();
-        global.$component = suite.component;
+        global.$component = this.component;
     }
 
     afterSuite(suite) {
@@ -25,23 +30,19 @@ class VueDriver extends Driver {
 
     sanitize(script) {
         // remove ES6 imports
-        script = script.replace("export default", "module.exports = ");
+        if(script.includes("export default")) {
+            script = script.replace("export default", "module.exports =");
+        }
 
         return eval(script);
     }
 
-    build() {
-        this.compile();
-        Unite.__currentSuite__["component"] = this.component;
-        eval(this.tests);
-    }
-
     findByTag($tag, $content) {
-        let $rgx = new RegExp("<" + $tag + ">([\\s\\S]*?)<\\/" + $tag + ">", "g");
+        let $rgx = new RegExp("<" + $tag + ".*?>([\\s\\S]*?)<\\/" + $tag + ">", "g");
         let $match, $matches = [];
         while ($match = $rgx.exec($content)) {
             if ($match) {
-                $matches.push($match[1].replace(/\s\s+/g, ' ').trim());
+                $matches.push($match[1]);
             }
         }
 

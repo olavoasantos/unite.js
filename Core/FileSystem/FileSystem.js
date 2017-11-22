@@ -8,6 +8,24 @@ class FileSystem {
         this.root = this.getRoot();
     }
 
+    getFiles(startPath, callback) {
+        if (!fs.existsSync(startPath)){
+            throw new Error(`Test path not found!`);
+            return;
+        }
+    
+        var files=fs.readdirSync(startPath);
+        for(var i=0;i<files.length;i++){
+            var filename=path.join(startPath,files[i]);
+            var stat = fs.lstatSync(filename);
+            if (stat.isDirectory()){
+                this.getFiles(filename, callback); //recurse
+            } else {
+                callback(this.get(filename));
+            }
+        };
+    }
+
     get($path) {
         return new File($path);
     }
@@ -20,8 +38,8 @@ class FileSystem {
         return new File($path);
     }
 
-    async delete($path) {
-        await fs.unlinkSync($path);
+    delete($path) {
+        fs.unlinkSync($path);
     }
 
     exists($path) {

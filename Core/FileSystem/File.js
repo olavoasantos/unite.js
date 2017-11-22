@@ -19,8 +19,8 @@ class File {
         return this;
     }
 
-    async delete() {
-        await fs.unlinkSync(this.path);
+    delete() {
+        fs.unlinkSync(this.path);
         delete this;
     }
 

@@ -47,6 +47,15 @@ class EventManager {
         return this.list[event];
     }
 
+    scope(name, callback) {
+        let label = Math.random().toString(36).substring(7);
+        this.fork(label);
+        this.object.$emit(`before${name}`);
+        callback(this.list);
+        this.object.$emit(`after${name}`);
+        this.rollback(label);
+    }
+
     fork(event) {
         this.forked[event] = JSON.parse(JSON.stringify(this.list));
     }

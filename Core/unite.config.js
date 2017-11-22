@@ -3,14 +3,15 @@ let path = require("path");
 module.exports = {
     "path": "./tests",
     "drivers": {
-        ".tests.js": "DefaultDriver",
-        ".specs.js": "DefaultDriver",
-        ".tests.vue": "VueDriver",
-        ".specs.vue": "VueDriver"
+        ".tests.js$": "DefaultDriver",
+        ".specs.js$": "DefaultDriver",
+        ".tests.vue$": "VueDriver",
+        ".specs.vue$": "VueDriver"
     },
+    "setup": [],
     "modules": {
         "events": {
-            "module": require(path.join(__dirname, "Events", "Events"))
+            "module": require(path.join(__dirname, "Events", "EventModule"))
         },
         "assertions": {
             "module": require(path.join(__dirname, "Assertions", "Expect"))
