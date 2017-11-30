@@ -27,13 +27,22 @@ class TestGlobalsModule extends Module {
     }
 
     test(name, test) {
-        Unite.__currentSuite__.tests.push({
+        let item = {
             suite: Unite.__currentSuite__.name,
             group: Unite.__currentSuite__.group,
+            isFinished: false,
             name: name,
-            run: test,
+            run: (resolve, reject) => {
+                try {
+                    test();
+                } catch (e) {
+                    reject(e);
+                }
+                resolve();
+            },
             error: null
-        });
+        };
+        Unite.__currentSuite__.tests.push(item);
     }
 }
 

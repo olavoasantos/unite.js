@@ -9,6 +9,9 @@ class JSDom extends Module {
     }
 
     make($html = "<body></body>") {
+        global.navigator = {
+            userAgent: 'node.js'
+        };
         global.window = (new jsdom($html)).window;
         global.document = window.document;
     }

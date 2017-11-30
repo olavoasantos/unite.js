@@ -63,7 +63,13 @@ class FileSystem {
     getRoot() {
         let $root = __dirname;
 
-        while( !this.exists(path.join($root, "node_modules")) ) {
+        let isRoot = () => {
+            return this.exists(path.join($root, "node_modules"))
+                && this.exists(path.join($root, "package.json"))
+                // && require((path.join($root, "package.json"))).name !== "unite.js";
+        }
+
+        while( !isRoot() ) {
             $root = path.join($root, "..");
         }
 

@@ -29,10 +29,15 @@ class Report {
     printErrors() {
         this.errors.forEach((item, count) => {
             if("matcherResult" in item.error) {
-                let line = item.error.stack.match(/at Object.test .*<anonymous>:(\d+):\d+\)|at Object.Unite.test .*<anonymous>:(\d+):\d+\)/);
-                line = line[1] || line[2];
+                let line = "=> line ";
+                try {
+                    let fullline = item.error.stack.match(/at.*test .*<anonymous>:(\d+):\d+\)|at Object.Unite.test .*<anonymous>:(\d+):\d+\)/);
+                    line += fullline[1] || fullline[2];
+                } catch(e) {
+                    line = ""
+                }
                 let group = item.group ? ` : ${item.group} ` : " ";
-                echo.redBg.white.text(`    ${count+1}) ${item.suite}${group}@ ${item.name} => line ${line}    `).break;
+                echo.redBg.white.text(`    ${count+1}) ${item.suite}${group}@ ${item.name} ${line}    `).break;
                 echo.text(item.error.matcherResult.message()).break;
             } else {
                 echo.redBg.white.text(`    ${count+1}) ${item.suite} @ ${item.name}    `).break;

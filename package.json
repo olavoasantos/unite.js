@@ -1,6 +1,6 @@
 {
   "name": "unite.js",
-  "version": "0.0.4",
+  "version": "0.0.5a",
   "description": "Simple JavaScript unit testing framework.",
   "main": "bin/unite.js",
   "scripts": {
@@ -28,13 +28,16 @@
   },
   "homepage": "https://github.com/olavoasantos/unite.js#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "console.echo": "0.0.3",
     "deepmerge": "^2.0.0",
     "dos2unix": "^1.1.2",
     "expect": "^21.2.1",
-    "jasmine-ajax": "^3.3.1",
     "jsdom": "^11.2.0",
+    "moxios": "^0.4.0",
     "require": "^2.4.20",
+    "sinon": "^4.1.2",
+    "uglify-js": "^3.1.10",
     "vue": "^2.5.2",
     "vue-loader": "^13.5.0",
     "vue-template-compiler": "^2.5.2",

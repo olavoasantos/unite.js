@@ -57,14 +57,17 @@ class Unite {
         this.$compiler.run(this.$suites);
 
         this.$suites = this.__filter__(this.$suites, filter);
+        
+        this.$suites.forEach( suite => suite.run() );
 
-        this.$suites.forEach( suite => {
-            suite.run();
+        process.on("beforeExit", () => {
+            this.$report.time(timer);
+            this.$report.result();
+            delete global.$test;
         });
 
-        this.$report.time(timer);
-        this.$report.result();
     }
+
 }
 
 module.exports = Unite;

@@ -50,9 +50,7 @@ class EventManager {
     scope(name, callback) {
         let label = Math.random().toString(36).substring(7);
         this.fork(label);
-        this.object.$emit(`before${name}`);
         callback(this.list);
-        this.object.$emit(`after${name}`);
         this.rollback(label);
     }
 

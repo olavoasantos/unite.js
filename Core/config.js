@@ -10,6 +10,9 @@ module.exports = {
     },
     "setup": [],
     "modules": {
+        "errorHandler": {
+            "module": require(path.join(__dirname, "ErrorHandler", "HandlerModule"))
+        },
         "events": {
             "module": require(path.join(__dirname, "Events", "EventModule"))
         },
@@ -31,6 +34,9 @@ module.exports = {
         },
         "testGlobals": {
             "module": require(path.join(__dirname, "TestGlobals", "TestGlobalsModule"))
+        },
+        "sinon": {
+            "module": require(path.join(__dirname, "Helpers", "SinonModule"))
         },
     }
 };

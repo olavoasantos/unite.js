@@ -170,8 +170,6 @@ As we can see by our last example, we constantly have to repeat the component mo
 
 Since this is a premature version of Unite.js, there aren't many hooks yet. For now, you can hook into:
 
-* `beforeSuite`: Runs before the suite
-* `afterSuite`: Runs after the suite
 * `beforeEachTest`: Runs before each test of the suite
 * `afterEachTest`: Runs after each test of the suite
 
@@ -226,25 +224,15 @@ Then, on your `unite.config.js` file, add:
 ```
 Now you can use your helpers on all your tests!
 
-## Upgrade 0.0.3 -> 0.0.4
+## Upgrade from <= 0.0.3
 
 * `Unite.suite()` has been deprecated. Change it to `Unite.group()` or `group()`.
 
-## Version 0.0.4
+## Version 0.0.5
 
-* Added the ability to filter files, tests and groups through the command line
-* Setup: Setup files can be declared through the `unite.config.js` files and will be prepended on the test files
-* Global helpers:
-    * Tests now can be declared both using `Unite.test()` or using the global `test()` helper
-    * Groups can be created using both using `Unite.group()` or using the global `group()` helper
-* Indexer: Now Unite.js can index files withing subfolders of the mais test directory
-* Final report redesign:
-    * Error report redesign
-    * Specifies error line
-    * Added execution time
+* Added support for asyncronous testing
 * Bug fixes:
-    * Fixed error during parsing of Vue.js SFCs where script tags contained attributes
-    * Fixed error caused by "//" comments and statements without ";" in *.tests.vue files
+    * Finding root directory algorithm now is more specific
 
 ## Author
 * [Olavo Amorim Santos](https://github.com/olavoasantos)

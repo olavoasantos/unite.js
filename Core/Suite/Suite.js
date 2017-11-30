@@ -10,6 +10,7 @@ class Suite {
         this.file = file;
         this.group = null;
         this.isTestable = false;
+        this.isFinished = false;
         this.name = file.basename;
         this.driver = "DefaultDriver";
 
@@ -39,24 +40,39 @@ class Suite {
     }
 
     run() {
-        this.driver.beforeSuite(this);
-        Unite.$events.scope("Suite", () => {
-            Unite.$events.list = this.events;
-            this.tests.forEach(item => this.test(item));
+        return new Promise((resolve, reject) => {
+            this.driver.beforeSuite(this);
+            Unite.$events.scope("Suite", () => {
+                Unite.$events.list = this.events;
+                Unite.$emit("beforeSuite");
+                Promise.all(
+                    this.tests.map(item => this.test(item))
+                )
+                .then(() => {
+                    this.driver.afterSuite(this);
+                    resolve();
+                })
+                .catch(e => {
+                    this.driver.afterSuite(this);
+                    reject(e);
+                });
+                Unite.$emit("afterSuite");
+            });
         });
-        this.driver.afterSuite(this);
     }
 
     test(item) {
         Unite.$emit("beforeEachTest");
-        try {
-            Unite.$report.tests++;
-            item.run();
-        } catch(e) {
-            item.error = e;
-            Unite.$report.errors.push(item);
-        }
-        Unite.$emit("afterEachTest");
+        global.$test = item;
+        Unite.$report.tests++;
+        return new Promise((resolve, reject) => {
+            item.run(resolve, reject);
+        })
+        .then(() => {
+            Unite.$emit("afterEachTest");          
+        }).catch(e => {
+            console.error(e);
+        });
     }
 }
 module.exports = Suite;

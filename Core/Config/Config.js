@@ -9,7 +9,7 @@ class Config {
 
     fetcher() {
         this.custom = this.getCustom();
-        this.default = require(fs.fromCore("unite.config.js"));
+        this.default = require(fs.fromCore("config.js"));
         let node = merge(this.default, this.custom);
 
         return (path) => {
