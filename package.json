@@ -1,6 +1,6 @@
 {
   "name": "unite.js",
-  "version": "0.0.5a",
+  "version": "0.0.5c",
   "description": "Simple JavaScript unit testing framework.",
   "main": "bin/unite.js",
   "scripts": {

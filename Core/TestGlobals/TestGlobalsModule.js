@@ -1,5 +1,6 @@
 let Module = require("../Contracts/Module");
 let clone = require('../Cloner/Cloner');
+let merge = require("deepmerge");
 
 class TestGlobalsModule extends Module {
     make() {
@@ -32,13 +33,12 @@ class TestGlobalsModule extends Module {
             group: Unite.__currentSuite__.group,
             isFinished: false,
             name: name,
-            run: (resolve, reject) => {
+            run: async () => {
                 try {
-                    test();
+                    await test();
                 } catch (e) {
-                    reject(e);
+                    Unite.$error.handler.register(e, merge({}, item));
                 }
-                resolve();
             },
             error: null
         };

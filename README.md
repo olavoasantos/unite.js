@@ -4,6 +4,12 @@ Simple JavaScript unit testing framework.
 ## Work in progress
 This is a premature version. Still needs more work, but its working. Contributions are always welcomed!
 
+## Requirements
+
+* Node.js >= v7.6
+
+    * Node.js v7.0 to v7.5 work with harmony flags (explained below)
+
 ## Installation
 ```
     npm install unite.js --save-dev
@@ -15,6 +21,16 @@ In your `package.json` file, set your `test` command in your `scripts` to:
 {
     "scripts": {
       "test": "unite"
+    }
+}
+```
+
+If you are running Node.js v7.0 to v7.5, use:
+
+```json
+{
+    "scripts": {
+      "test": "node --harmony-async-await node_modules/unite.js/bin/unite"
     }
 }
 ```
@@ -85,6 +101,26 @@ When testing a `.tests.vue` component, Unite.js injects the parsed component as 
 * ´Unite.$transitionGroupStub´
 
 Check out [vue test utils documentation](https://vue-test-utils.vuejs.org/) for more details.
+
+## Asyncronous test
+
+In many cases, you might find yourself in situations which you need to test asyncronous actions. In Vue.js is very common to need to wait for an update on the component which is displayed on the next tick. For this situations, the best way to test this is to make use of Node.js' async/await functionality!
+
+Say that we have a component where, after we click on a button, it fetches data through an ajax call and displays it on the DOM. To test this, we can write something like:
+
+```vue
+    // ./tests/example.tests.vue    
+    <tests>
+        test("It sees Hello world", async () => {
+            let wrapper = Unite.$mount($component);
+            wrapper.find("button.getData").trigger("click");
+
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.find(".data")).toContain("New data");
+        });
+    </tests>
+```
 
 ## Group
 
@@ -232,6 +268,7 @@ Now you can use your helpers on all your tests!
 
 * Added support for asyncronous testing
 * Bug fixes:
+    * Fixed error report misassignment
     * Finding root directory algorithm now is more specific
 
 ## Author

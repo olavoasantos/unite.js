@@ -40,39 +40,22 @@ class Suite {
     }
 
     run() {
-        return new Promise((resolve, reject) => {
+        Unite.$events.scope("Suite", () => {
+            Unite.$events.list = this.events;
             this.driver.beforeSuite(this);
-            Unite.$events.scope("Suite", () => {
-                Unite.$events.list = this.events;
-                Unite.$emit("beforeSuite");
-                Promise.all(
-                    this.tests.map(item => this.test(item))
-                )
-                .then(() => {
-                    this.driver.afterSuite(this);
-                    resolve();
-                })
-                .catch(e => {
-                    this.driver.afterSuite(this);
-                    reject(e);
-                });
-                Unite.$emit("afterSuite");
-            });
+            Unite.$emit("beforeSuite");
+            this.tests.forEach(item => this.test(item));
+            Unite.$emit("afterSuite");
+            this.driver.afterSuite(this);
         });
     }
 
     test(item) {
         Unite.$emit("beforeEachTest");
-        global.$test = item;
+        global.$test = merge({}, item);
         Unite.$report.tests++;
-        return new Promise((resolve, reject) => {
-            item.run(resolve, reject);
-        })
-        .then(() => {
-            Unite.$emit("afterEachTest");          
-        }).catch(e => {
-            console.error(e);
-        });
+        item.run();
+        Unite.$emit("afterEachTest");
     }
 }
 module.exports = Suite;

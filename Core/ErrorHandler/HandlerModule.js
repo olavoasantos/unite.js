@@ -1,4 +1,6 @@
 let Module = require("../Contracts/Module");
+let Handler = require("./Handler");
+let merge = require("deepmerge");
 
 class HandlerModule extends Module {
     initialize() {
@@ -6,6 +8,10 @@ class HandlerModule extends Module {
         this.make();
     }
     make() {
+        this.unite.$error = {
+            handler: Handler
+        };
+
         console.error = (...args) => {
             if(args[0].constructor.name.includes("Error")) throw args[0];
 
@@ -13,10 +19,7 @@ class HandlerModule extends Module {
         }
 
         process.on('unhandledRejection', (e) => {
-            if(global.$test) {
-                $test.error = e;
-                this.unite.$report.errors.push($test);
-            }
+            if(global.$test) Handler.register(e, merge({}, global.$test));
         });
     }
 
